@@ -96,10 +96,9 @@ let bar = svg
     return yScale(d.TCC); //makes the y value humidity
   })
   .attr('width', xScale.bandwidth()) //spaces the bars along the xScale object
-  .attr('fill', function(d){
-    return findColor(d.TCC);
+  .attr('fill', 'purple')
 
-  }) //fills in the bar according to colormap
+   //fills in the bar according to colormap
   .attr('height', function(d) {
     return height - margin.bottom - yScale(d.TCC); //makes the height of the bar match its humidity
   })

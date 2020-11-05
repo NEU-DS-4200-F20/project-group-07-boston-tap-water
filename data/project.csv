@@ -1,4 +1,4 @@
-Run,Date,Season,Temperature Celsius,pH,Chlorine (Mg/L),Ammonium (micromolar),Nitrate (micromolar),Nirtrite (micromolar),Membrane_Non_ICC (cells/mL),Membrane_ICC (cells/mL),Betaproteobacteria (percent),Nitrospira,Gammaproteobacteria,Planctomycetia,Actinobacteria,Oligoflexia,Gemmatimonadetes,Chlamydiia,Flavobacteriia,Deltaproteobacteria,TCC (cells/mL)
+Run,Date,Season,Temperature Celsius,pH,Chlorine (Mg/L),Ammonium (micromolar),Nitrate (micromolar),Nirtrite (micromolar),Non_ICC,ICC,Betaproteobacteria (percent),Nitrospira,Gammaproteobacteria,Planctomycetia,Actinobacteria,Oligoflexia,Gemmatimonadetes,Chlamydiia,Flavobacteriia,Deltaproteobacteria,TCC
 Run#001_030119,3/1/19,Spring,22.55,9.11,1.43,29.65,6.45,0.17,15,5,5.93E+00,5.37E+00,9.87E-01,7.11E-01,6.94E-01,1.60E-01,1.38E-01,1.21E-01,1.11E-01,8.66E-02,20
 Run#005_031519,3/15/19,Spring,22.85,9.24,1.44,16.15,8.87,0.11,22,9,6.79E+00,4.68E+00,4.87E-01,6.94E-01,7.03E-01,2.58E-01,2.43E-01,1.25E-01,6.89E-02,8.60E-02,31
 Run#010_040219,4/2/19,Spring,18.90,9.29,1.71,29.36,11.29,0.13,31,15,9.39E+00,3.92E+00,3.21E-01,4.16E-01,5.50E-01,6.63E-01,2.73E-01,9.55E-02,1.01E-01,9.09E-02,46
