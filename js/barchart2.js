@@ -3,9 +3,9 @@ let parseDate2 = d3.timeParse('%m/%d/%y');
 
 
   let margin = {
-    top: 40,
+    top: 100,
     bottom: 30,
-    left: 30,
+    left: 90,
     right: 30
   };
 
@@ -21,16 +21,16 @@ function barChart(data){
   let minDate  = d3.min(data, function(d){return d.Date; }); //finds the minimum date for x axis
   let maxCount = d3.max(data, function(d){return d.TCC;}); // finds the max meantemp for y axis
   console.log(maxDate, minDate, maxCount); //prints out these values in console
-  
+
   let svg2 = d3.select('#barChart')
   .append('svg')
   .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of the page.
   .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
   .style('background-color', '#fff') // change the background color to white
   .attr('viewBox', [0, 0, width2 + margin.left + margin.right , height2 + margin.top + margin.bottom].join(' '))
-  
 
-  
+
+
 
 let yScale = d3.scaleLinear()
   .domain([0,maxCount]) //sets the y axis to scale humidity from min to max
@@ -49,35 +49,49 @@ let xScale = d3.scaleBand()
 let yAxis = svg2
   .append('g')
   .attr('transform', `translate(${margin.left},0)`) //positions the y axis on the left margin
+  .style("font", "20px times")
   .call(d3.axisLeft().scale(yScale))
 
   //Add label
   .append('text')
-  .attr('y', 30) // gives y coordinate of label
-  .attr('x', 125) //gives x coordinate of label 
+  .attr('y', -60) // gives y coordinate of label
+  .attr('x', -195) //gives x coordinate of label
   .style('fill', 'black') //styles the text to black
-  .attr('font-size', 30)
-  .text('Cell Count'); //adds Humidity as axis label
+  .attr('font-size', 25)
+  .attr("transform", "rotate(270)")
+  .text('Cell Count (cells/mL)') //adds Humidity as axis label
 
 
 let xAxis = svg2
   .append('g')
   .attr('transform', `translate(0,${height2 - margin.bottom})`) //positions the x axis on the bottom margin
+  .style("font", "20px times")
   .call(d3.axisBottom().scale(xScale))
-  
+
   //Add label
   .append('text')
   /*.attr('x', width2 - margin.left) //gives x coordinate of label to left margin
   .attr('y', -10)// gives y coordinate of lable
   .style('stroke', 'black')*/
   .attr('x', 500) //gives x coordinate of label to left margin
-  .attr('y', 50)// gives y coordinate of lable
-  .attr('font-size', 30)
+  .attr('y', 70)// gives y coordinate of lable
+  .attr('font-size', 25)
   .style('fill', 'black') //styles the text to black
-  
+
   .text('Dates'); //adds Dates as text
 
-  
+
+let title = svg2
+  .append('g')
+  .append('text')
+  .attr('x', 380) //gives x coordinate of label to left margin
+  .attr('y', 25)// gives y coordinate of lable
+  .style('fill', 'black') //styles the text to black
+  .style("font", "30px times")
+  .style("font-weight", "bold")
+  .text('Cell Count Over Time'); //adds Dates as text
+
+
 //Draw bars
 
 let g = svg2.selectAll(".rect")
@@ -113,31 +127,33 @@ g.append("rect")
   .attr('fill', '#3A1D90') //fills in the bar according to colormap
   .attr('height', function(d) {
     return height2 - margin.bottom - yScale(d.ICC); //makes the y value humidity
-  }) 
+  })
 
   colors = ['#9370DB', '#3A1D90']
+  values = [90, 113]
 
 let legend = svg2.selectAll(".legend")
   .data(colors)
   .enter().append("g")
   .attr("class", "legend")
-  .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
- 
+  .attr("transform", function(d, i) { return "translate(30," + values[i] + ")"; });
+
 legend.append("rect")
   .attr("x", width2 - 400 )
   //.attr ("y", height2 + 20)
   .attr("width", 18)
   .attr("height", 18)
   .style("fill", function(d, i) {return colors[i];});
- 
+
 legend.append("text")
   .attr("x", width2 - 375 )
   .attr("y", 9)
   .attr("dy", ".35em")
   .style("text-anchor", "start")
-  .text(function(d, i) { 
+  .style("font", "20px times")
+  .text(function(d, i) {
     switch (i) {
-      case 0: return "Membrane Non_Intact Cells";
+      case 0: return "Membrane Non-Intact Cells";
       case 1: return "Membrane Intact Cells";
     }
   });
@@ -151,7 +167,7 @@ legend.append("text")
       .delay(200)
       .duration(1000)
       .attr('fill', 'pink') // changes bar to pink when mouseover
-    
+
   })
 
   .on('mouseout', function(d) {
@@ -171,7 +187,7 @@ function findColor(x){
   else { return 'Dodgerblue'} //creates the colormap for the barchart based on humidity values
 
 };
-  
+
 */
 }
 
@@ -190,5 +206,3 @@ let data2 = d3.csv('data/project.csv', function(d) {
 
 //data1.then(lineChart); //makes a linechart using this data array
 data2.then(barChart); //makes a bar chart using this data array
-
-
