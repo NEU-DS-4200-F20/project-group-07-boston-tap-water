@@ -3,7 +3,7 @@ let parseDate2 = d3.timeParse('%m/%d/%y');
 
 
   let margin = {
-    top: 30,
+    top: 40,
     bottom: 30,
     left: 30,
     right: 30
@@ -27,7 +27,7 @@ function barChart(data){
   .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of the page.
   .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
   .style('background-color', '#fff') // change the background color to white
-  .attr('viewBox', [0, 0, width2 + margin.left + margin.right, height2 + margin.top + margin.bottom].join(' '))
+  .attr('viewBox', [0, 0, width2 + margin.left + margin.right , height2 + margin.top + margin.bottom].join(' '))
   
 
   
@@ -53,9 +53,10 @@ let yAxis = svg2
 
   //Add label
   .append('text')
-  .attr('y', 15) // gives y coordinate of label
-  .attr('x', 20) //gives x coordinate of label 
-  .style('stroke', 'black') //styles the text to black
+  .attr('y', 30) // gives y coordinate of label
+  .attr('x', 125) //gives x coordinate of label 
+  .style('fill', 'black') //styles the text to black
+  .attr('font-size', 30)
   .text('Cell Count'); //adds Humidity as axis label
 
 
@@ -66,9 +67,14 @@ let xAxis = svg2
   
   //Add label
   .append('text')
-  .attr('x', width2 - margin.left) //gives x coordinate of label to left margin
+  /*.attr('x', width2 - margin.left) //gives x coordinate of label to left margin
   .attr('y', -10)// gives y coordinate of lable
-  .style('stroke', 'black') //styles the text to black
+  .style('stroke', 'black')*/
+  .attr('x', 500) //gives x coordinate of label to left margin
+  .attr('y', 50)// gives y coordinate of lable
+  .attr('font-size', 30)
+  .style('fill', 'black') //styles the text to black
+  
   .text('Dates'); //adds Dates as text
 
   
