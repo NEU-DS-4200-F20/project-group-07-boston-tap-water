@@ -1,8 +1,7 @@
 //let parseDate1 = d3.timeParse('%Y-%m-%d'); // parses the data column in the data into readable time values
 let parseDate2 = d3.timeParse('%m/%d/%y');
 
-  let width1  = 900; //sets the measurements for the first visualization
-  let height = 500;
+
   let margin = {
     top: 30,
     bottom: 30,
@@ -28,9 +27,8 @@ function barChart(data){
   .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of the page.
   .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
   .style('background-color', '#fff') // change the background color to white
-
   .attr('viewBox', [0, 0, width2 + margin.left + margin.right, height2 + margin.top + margin.bottom].join(' '))
-  .classed("svg-content", true);
+  
 
   
 
@@ -75,11 +73,16 @@ let xAxis = svg2
 
   
 //Draw bars
-let bar = svg2
-  .selectAll('rect') 
+
+let g = svg2.selectAll(".rect")
   .data(data)
   .enter()
-  .append('rect') //adds rectangles
+  .append("g")
+  .classed('rect', true)
+
+
+
+g.append("rect")
   .attr('x', function(d) {
     return xScale(d.Date); //makes the bars by date
   })
@@ -87,19 +90,13 @@ let bar = svg2
     return yScale(d.TCC); //makes the y value humidity
   })
   .attr('width', xScale.bandwidth()) //spaces the bars along the xScale object
-  .attr('fill', 'purple') //fills in the bar according to colormap
+  .attr('fill', '#9370DB') //fills in the bar according to colormap
   .attr('height', function(d) {
     return height2 - margin.bottom - yScale(d.TCC); //makes the height of the bar match its humidity
   })
-  bar.append("title")
-  .text(function(d) { return d.Date + ":  " + d.TCC}); //adds a title tag to bar and displays date and humidity when hovered
 
 
-  let bar2 = svg2
-  .selectAll('rect') 
-  .data(data)
-  .enter()
-  .append('rect') //adds rectangles
+  g.append("rect")
   .attr('x', function(d) {
    return xScale(d.Date); //makes the bars by date
   })
@@ -107,14 +104,38 @@ let bar = svg2
     return yScale(d.ICC); //makes the y value humidity
   })
   .attr('width', xScale.bandwidth()) //spaces the bars along the xScale object
-  .attr('fill', 'lightpurple') //fills in the bar according to colormap
+  .attr('fill', '#3A1D90') //fills in the bar according to colormap
   .attr('height', function(d) {
-    return d.ICC; //makes the y value humidity
-  }) //makes the height of the bar match its humidity
-  bar.append("title")
-  .text(function(d) { return d.Date + ":  " + d.TCC});
+    return height2 - margin.bottom - yScale(d.ICC); //makes the y value humidity
+  }) 
 
-  
+  colors = ['#9370DB', '#3A1D90']
+
+let legend = svg2.selectAll(".legend")
+  .data(colors)
+  .enter().append("g")
+  .attr("class", "legend")
+  .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+ 
+legend.append("rect")
+  .attr("x", width2 - 400 )
+  //.attr ("y", height2 + 20)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", function(d, i) {return colors[i];});
+ 
+legend.append("text")
+  .attr("x", width2 - 375 )
+  .attr("y", 9)
+  .attr("dy", ".35em")
+  .style("text-anchor", "start")
+  .text(function(d, i) { 
+    switch (i) {
+      case 0: return "Membrane Non_Intact Cells";
+      case 1: return "Membrane Intact Cells";
+    }
+  });
+
 
   //Interaction
 /*bar
