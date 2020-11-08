@@ -36,6 +36,9 @@ h1, h2, h3 {
   
 }
 
+.vis-caption {
+  padding:5px 40px;
+}
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
