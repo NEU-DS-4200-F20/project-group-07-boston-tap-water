@@ -36,15 +36,6 @@ svg.append("g")
 let myColor = d3.scaleLinear()
   .range(["white", "blue"])
   .domain([1,100])
-/*
-svg
-.append('rect')
-.attr('x', 4)
-.attr('y', 5)
-.attr("width", x.bandwidth() )
-.attr("height", y.bandwidth() )
-.style('fill', 'blue')
-*/
 
 data = d3.csv("data/heatmap_data.csv", 
 function(d) { return {date: d.Date, type: d.Type, prop : +d.Proportion}})
