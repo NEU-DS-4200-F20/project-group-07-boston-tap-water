@@ -12,64 +12,61 @@ let svg = d3.select("#heatmap")
         "translate(" + (margin.left + 100) + "," + margin.top + ")");
 
 // Labels of row and columns
-let myGroups = ["3/1/19"]
-let myVars = ["Betaproteobacteria","Nitrospira","Gammaproteobacteria","Planctomycetia","Actinobacteria", "Oligoflexia","Gemmatimonadetes","Chlamydiia","Flavobacteriia","Deltaproteobacteria"]
 
-// Build X scales and axis:
-let x = d3.scaleBand()
-  .range([ 0, width ])
-  .domain(myGroups)
-  .padding(0.01);
-svg.append("g")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x))
 
-// Build Y scales and axis:
-let y = d3.scaleBand()
-  .range([ height, 0 ])
-  .domain(myVars)
-  .padding(0.01);
-svg.append("g")
-  .call(d3.axisLeft(y));
 
-// Build color scale
-let myColor = d3.scaleLinear()
-  .range(["white", "blue"])
-  .domain([1,100])
 
-data = d3.csv("data/heatmap_data.csv", 
-function(d) { return {date: d.Date, type: d.Type, prop : +d.Proportion}})
-//console.log(data)
 
+d3.csv("data/heatmap_data.csv").then(function(data){  
+  //data = data.slice().sort((a, b) => d3.ascending(a.Proportion, b.Proportion))
+  
+  let myGroups = ["3/1/19"]
+  /*
+  let myVars = ["Betaproteobacteria","Nitrospira","Gammaproteobacteria","Planctomycetia","Actinobacteria", "Oligoflexia","Gemmatimonadetes","Chlamydiia","Flavobacteriia","Deltaproteobacteria"]
+  */
+  //console.log(data[0].Type)
+  let myVars = []
+  
+  for(i=0; i < 120; i++) {
+    myVars.push(data[i].Type)
+  }
+  console.log(myVars)
+  
+    // Build X scales and axis:
+  let x = d3.scaleBand()
+    .range([ 0, width ])
+    .domain(myGroups)
+    .padding(0.01);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+  
+  // Build Y scales and axis:
+  let y = d3.scaleBand()
+    .range([ height, 0 ])
+    .domain(myVars)
+    .padding(0.01);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+    
+  // Build color scale
+  let myColor = d3.scaleLinear()
+    .range(["pink", "blue"])
+    .domain([-1, 6])
+    
+    
+console.log(data)
 svg.selectAll()
 .data(data, function(d) {
-  console.log(d.date + ':' + d.type)
-  return d.date + ':' + d.type})
+  return d.Date + ':' + d.Type})
 .enter()
 .append("rect")
-	  .attr("x", function(d) { return x(d.date) })
-	  .attr("y", function(d) { return y(d.type) })
+	  .attr("x", function(d) { return x(d.Date) })
+	  .attr("y", function(d) { return y(d.Type) })
 	  .attr("width", x.bandwidth() )
 	  .attr("height", y.bandwidth() )
-	  .style("fill", function(d) { return myColor(d.prop)} )
-
-
-
-//Read the data
-//d3.csv("data/heatmap_data.csv").then(data =>
-  //console.log(svg.selectAll('.cell'))
-  //console.log(data)
-  /*d3.selectAll('svg').selectAll('.rect')
-    .data(data, function(d) {
-        console.log(d.date)
-        return d.date+':'+d.type;})
-  
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("x", function(d) { return x(d.date) })
-      .attr("y", function(d) { return y(d.type) })
-      .attr("width", x.bandwidth() )
-      .attr("height", y.bandwidth() )
-      .style("fill", function(d) { return myColor(d.prop)} )*/
-
+	  .style("fill", function(d) { 
+	    console.log(d.Proportion)
+	    return myColor(+d.Proportion)} )
+	  
+});
