@@ -36,8 +36,12 @@ h1, h2, h3 {
   
 }
 
-.vis-caption {
-  padding:5px 40px;
+#heatmap a{
+  width: 50%;
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto ;
+
 }
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
