@@ -51,7 +51,7 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     
   // Build color scale
   let myColor = d3.scaleLinear()
-    .range(["pink", "blue"])
+    .range(["white", "red"])
     .domain([-1, 6])
     
     

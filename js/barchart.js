@@ -20,8 +20,8 @@ function barChart(){
       left: 90,
       right: 30
     };
-  let width = 1000; 
-  let height = 550;
+  let width = 750 - margin.left - margin.right; 
+  let height = 500 - margin.top - margin.bottom;
 
   // Create the chart by adding an svg to the div with the id 
   // specified by the selector using the given data
@@ -39,11 +39,12 @@ function barChart(){
     //prints out these values in console
     console.log(maxDate, minDate, maxCount, d3.max(data, d => y2Value(d))); 
 
-    let svg2 = d3.select('#barChart')
+    let svg2 = d3.select('#barchart')
     .append('svg')
     // scale visualization according to the size of the page.
     .attr('preserveAspectRatio', 'xMidYMid meet') 
-    .attr('width', '100%') 
+    .attr('width', width + margin.right + margin.left) 
+    .attr('height', height + margin.top + margin.bottom) 
     .style('background-color', '#fff') // change the background color to white
     .attr('viewBox', [0, 0, width + margin.left + margin.right , height + margin.top + margin.bottom].join(' '))
   
@@ -65,15 +66,15 @@ function barChart(){
   let yAxis = svg2
     .append('g')
     .attr('transform', `translate(${margin.left},0)`) //positions the y axis on the left margin
-    .style("font", "20px times")
+    .style("font", "20px")
     .call(d3.axisLeft().scale(yScale))
   
     //Add label
     .append('text')
-    .attr('y', -60) // gives y coordinate of label
-    .attr('x', -195) //gives x coordinate of label
+    .attr('y', -35) // gives y coordinate of label
+    .attr('x', -145) //gives x coordinate of label
     .style('fill', 'black') //styles the text to black
-    .attr('font-size', 25)
+    .attr('font-size', 15)
     .attr("transform", "rotate(270)")
     .text('Cell Count (cells/mL)') //adds cell count as axis label
   
@@ -82,14 +83,14 @@ function barChart(){
     .append('g')
     //positions the x axis on the bottom margin
     .attr('transform', `translate(0,${height - margin.bottom})`) 
-    .style("font", "20px times")
+    .style("font", "20px")
     .call(d3.axisBottom().scale(xScale))
   
     //Add label
     .append('text')
-    .attr('x', 500) //gives x coordinate of label to left margin
-    .attr('y', 70)// gives y coordinate of lable
-    .attr('font-size', 25)
+    .attr('x', 340) //gives x coordinate of label to left margin
+    .attr('y', 40)// gives y coordinate of lable
+    .attr('font-size', 15)
     .style('fill', 'black') //styles the text to black
   
     .text('Dates'); //adds Dates as text
@@ -98,10 +99,10 @@ function barChart(){
   let title = svg2
     .append('g')
     .append('text')
-    .attr('x', 380) //gives x coordinate of label to left margin
-    .attr('y', 25)// gives y coordinate of lable
+    .attr('x', 260) //gives x coordinate of label to left margin
+    .attr('y', 50)// gives y coordinate of lable
     .style('fill', 'black') //styles the text to black
-    .style("font", "30px times")
+    .style("font", "30px")
     .style("font-weight", "bold")
     .text('Cell Count Over Time'); //adds Cell Count Over Time as text
   
@@ -153,7 +154,7 @@ function barChart(){
   
   // append the boxes in the legenc
   legend.append("rect")
-    .attr("x", width - 400 )
+    .attr("x", 275)
     //.attr ("y", height2 + 20)
     .attr("width", 18)
     .attr("height", 18)
@@ -161,11 +162,11 @@ function barChart(){
   
   // append the text to the legenc
   legend.append("text")
-    .attr("x", width - 375 )
+    .attr("x", 300 )
     .attr("y", 9)
-    .attr("dy", ".35em")
+    .attr("dy", ".15em")
+    .style("font", "5px")
     .style("text-anchor", "start")
-    .style("font", "20px times")
     .text(function(d, i) {
       switch (i) {
         case 0: return "Membrane Non-Intact Cells";

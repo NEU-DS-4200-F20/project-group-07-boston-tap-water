@@ -27,22 +27,74 @@ h1, h2, h3 {
 
 /* But your visualization should be full-width and full-height */
 .vis-holder {
-  width: 50%;
-  height: 50%;
+  width: 90%;
+  height: 90%;
   margin-left: auto;
   margin-right: auto ;
-
+  display: flex;
 
   
 }
 
 #heatmap a{
-  width: 50%;
-  height: 50%;
+  width: 10%;
+  height: 10%;
+  margin-left: auto;
+  margin-right: auto ;
+  border: .25px solid black;
+}
+
+table {
+  font-size: 14px;
+  border-collapse: separate;
+  /* vertical | horizontal */
+  border-spacing: 0 0;
+  text-align: right;
+  margin: 0 auto;
+  padding: 1px 8px;
+}
+
+th, td {
+  /* vertical | horizontal */
+  padding: 2px 6px;
+}
+
+table.text-unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.table-holder {
+  left: 0%;
+  /* Center vertically */
+  position: relative;
+  top: 160%;
+  }
+
+#barchart a{
+  width: 90%;
+  height: 90%;
   margin-left: auto;
   margin-right: auto ;
 
 }
+
+/* The line chart will take the left half of the screen */
+.barchart-holder {
+  flex: 0 0 50%;
+}
+
+/* The scatterplot will take the right half of the screen */
+.heatmap-holder {
+  flex: 0 1 50%;
+}
+
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{

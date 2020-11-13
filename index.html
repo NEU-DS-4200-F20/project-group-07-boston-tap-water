@@ -52,13 +52,17 @@
   </div>
 
   <!-- Visualization goes here -->
-  <div class='vis-holder' id='barChart'>
+  <div class='vis-holder'>
+    <div class='barchart-holder' id='barchart'> </div>
+    <div class='heatmap-holder' id='heatmap'> </div>
   </div>
+  <div class= 'table-holder' id= 'table'></div>
+
   <div class='content-column'>
     <p>For our main view, we implemented a stacked bar chart that illustrated the total cell count over time. The stacks also allow comparison between the membrane intact cells and membrane non- intact cells within each run or date. Instead of using two separate colors for encoding the two cell count subcategories, we decided to use one color of different saturations – a lighter purple to represent the membrane non-intact cell count and a darker purple for the membrane intact cell count.</p>
   </div>
   
-  <div class='vis-holder' id='heatmap'></div>
+  
   
   <!-- Further writeup -->
   <div class = 'content-column'>
@@ -107,6 +111,7 @@
   <script src='lib/d3.v6.1.1/d3.min.js'></script>
   <script src='js/barchart.js'></script>
   <script src='js/heatmap.js'></script>
+  <script src='js/table.js'></script>
   <script src='js/visualization.js'></script>
 </body>
 </html>
