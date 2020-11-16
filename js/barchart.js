@@ -154,7 +154,7 @@ function barChart(){
   
   // append the boxes in the legenc
   legend.append("rect")
-    .attr("x", 275)
+    .attr("x", 350)
     //.attr ("y", height2 + 20)
     .attr("width", 18)
     .attr("height", 18)
@@ -162,10 +162,10 @@ function barChart(){
   
   // append the text to the legenc
   legend.append("text")
-    .attr("x", 300 )
-    .attr("y", 9)
+    .attr("x", 373)
+    .attr("y", 10)
     .attr("dy", ".15em")
-    .style("font", "5px")
+    .attr("font-size", "12px")
     .style("text-anchor", "start")
     .text(function(d, i) {
       switch (i) {
