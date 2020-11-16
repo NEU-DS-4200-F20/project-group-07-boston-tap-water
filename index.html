@@ -43,7 +43,7 @@
 
     <h1>Abstract</h1>
 
-    <p>Replace with your paper abstract.</p>
+    <p>The Massachusetts Water Resources Authority supplies water to over 2.5 million people in the Boston area. The Pinto lab investigates the characteristics of the microbiome in this tap water in order to ensure safe drinking water is being distributed, focusing on the complete ammonia oxidizer bacterial communities in tap water. This project seeks to visualize characteristics of tap water, creating a visual “story” which combines data from all characteristics, both chemical and genomic, taken of tap water over a time series.</p>
 
 
     <h1>Visualization</h1>
@@ -59,7 +59,7 @@
   <div class= 'table-holder' id= 'table'></div>
 
   <div class='content-column'>
-    <p>For our main view, we implemented a stacked bar chart that illustrated the total cell count over time. The stacks also allow comparison between the membrane intact cells and membrane non- intact cells within each run or date. Instead of using two separate colors for encoding the two cell count subcategories, we decided to use one color of different saturations – a lighter purple to represent the membrane non-intact cell count and a darker purple for the membrane intact cell count.</p>
+   
   </div>
   
   
@@ -80,6 +80,12 @@
     <h1>Visualization explanation</h1>
 
     <p>Replace with a brief explanation (can be copied from the paper) and linked presentation slides.</p>
+    <p>For our main view, we implemented a stacked bar chart that illustrated the total cell count over time. The stacks also allow comparison between the membrane intact cells and membrane non-intact cells within each run or date. Instead of using two separate colors for encoding the two cell count subcategories, we decided to use one color of different saturations – a lighter purple to represent the membrane non-intact cell count and a darker purple for the membrane intact cell count. </p>
+      
+      <p>Our details on demand feature was illustrated in an ordered heatmap. The heatmap uses a sequential colormap to encode the proportions of the ten most prevalent bacterial phyla overall: Betaproteobacteria, Nitrospira, Gammaproteobacteria, Planctomycetia, Actinobacteria, Oligoflexia, Gemmatimonadetes, Chlamydiia, Flavobacteriia, and Deltaproteobacteria. Users will be able to click on a bar in the main stacked barchart, which will reveal the ordered heatmap for that chosen run or date. We used a red-white scale so that the bacteria with higher proportions would be emphasized, allowing for easy comparison. </p>
+      
+      <p>For the table, we showed an overview of the chemical data: Date, Season, Temperature, pH, Chlorine, Ammonium, Nitrate, and Nitrite. Our brushing and linking functionality will allow users to brush over rows in the table, highlighting them as well as the corresponding bars in the main barchart.
+      </p>
 
     <h1>Acknowledgments</h1>
 
@@ -104,6 +110,7 @@
         How to make a legend</a>
         by Michael Stanaland.
       </li>
+      <li><a href = "https://bl.ocks.org/melt6457/712da3556e18fa517e2cd9d432933bce">How to make a heatmap</a> by Kory Melton</li>
     </ul>
   </div>
 

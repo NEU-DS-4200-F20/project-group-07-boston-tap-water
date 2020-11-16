@@ -11,6 +11,17 @@ let svg = d3.select("#heatmap")
   .attr("transform",
         "translate(" + (margin.left + 100) + "," + margin.top + ")");
 
+        
+let title = svg
+    .append('g')
+    .append('text')
+    .attr('x', -80) //gives x coordinate of label to left margin
+    .attr('y', -17)// gives y coordinate of lable
+    .style('fill', 'black') //styles the text to black
+    .style("font", "30px")
+    .style("font-weight", "bold")
+    .text('Bacterial Phyla Proportions');
+
 // Labels of row and columns
 
 
@@ -28,10 +39,21 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   let myVars = []
   
   for(i=0; i < 120; i++) {
+    if (data[i].Date == "3/1/19"){
     myVars.push(data[i].Type)
+    }
   }
-  console.log(myVars)
-  
+  //console.log(myVars)
+
+  let subset = [];
+
+  for(i=0; i < 120; i++) {
+    if (data[i].Date == "3/1/19"){
+    subset.push(data[i])
+    }
+  }
+  console.log(subset)
+  //myVars = myVars
     // Build X scales and axis:
   let x = d3.scaleBand()
     .range([ 0, width ])
@@ -50,14 +72,18 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     .call(d3.axisLeft(y));
     
   // Build color scale
-  let myColor = d3.scaleLinear()
-    .range(["white", "red"])
-    .domain([-1, 6])
+  /*let myColor = d3.scaleSequential()
+    .range(["#FFECEC", "red"])
+    .domain([0, 5.95])*/
+   
+  var myColor = d3.scaleSequential()
+      .interpolator(d3.interpolateGreens)
+      .domain([.1, 6])
+  
     
-    
-console.log(data)
+//console.log(data)
 svg.selectAll()
-.data(data, function(d) {
+.data(subset, function(d) {
   return d.Date + ':' + d.Type})
 .enter()
 .append("rect")

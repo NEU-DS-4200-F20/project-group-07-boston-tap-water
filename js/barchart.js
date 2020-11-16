@@ -27,7 +27,7 @@ function barChart(){
   // specified by the selector using the given data
   function chart(selector, data){
     //loads the data into the console
-    console.log(data); 
+    //console.log(data); 
     
     //finds the maximum date for x axis
     let maxDate  = d3.max(data, d => xValue(d)); 
