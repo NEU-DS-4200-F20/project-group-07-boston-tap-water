@@ -1,3 +1,5 @@
+
+
 let margin = {top: 30, right: 200, bottom: 30, left: 30},
   width = 300 - margin.left - margin.right,
   height = 400 - margin.top - margin.bottom;
@@ -38,7 +40,7 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   //console.log(data[0].Type)
   let myVars = []
   
-  for(i=0; i < 120; i++) {
+  for(i=0; i < 120; i++) { //makes an array with the bacteria phyla names
     if (data[i].Date == "3/1/19"){
     myVars.push(data[i].Type)
     }
@@ -47,7 +49,7 @@ d3.csv("data/heatmap_data.csv").then(function(data){
 
   let subset = [];
 
-  for(i=0; i < 120; i++) {
+  for(i=0; i < 120; i++) { //makes subset of data with corresponding date
     if (data[i].Date == "3/1/19"){
     subset.push(data[i])
     }
@@ -76,22 +78,23 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     .range(["#FFECEC", "red"])
     .domain([0, 5.95])*/
    
-  var myColor = d3.scaleSequential()
+  let myColor = d3.scaleSequential()
       .interpolator(d3.interpolateGreens)
       .domain([.1, 6])
   
     
 //console.log(data)
+
 svg.selectAll()
 .data(subset, function(d) {
   return d.Date + ':' + d.Type})
 .enter()
-.append("rect")
+.append("rect") //places rectangles on axis based on attributes below
 	  .attr("x", function(d) { return x(d.Date) })
 	  .attr("y", function(d) { return y(d.Type) })
 	  .attr("width", x.bandwidth() )
 	  .attr("height", y.bandwidth() )
-	  .style("fill", function(d) { 
+	  .style("fill", function(d) {  //fills color based on proportion values
 	    console.log(d.Proportion)
 	    return myColor(+d.Proportion)} )
 	  
