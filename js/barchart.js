@@ -6,8 +6,9 @@
 // Reusable Chart framework https://bost.ocks.org/mike/chart/
 function barChart(){
 
-    let xValue = d => d[0],
-    y1Value = d => d[1],
+    let xValue = d => d[0]
+    console.log(xValue)
+    let y1Value = d => d[1],
     y2Value = d => d[2],
     xLabelText = '',
     yLabelText = '',
@@ -115,8 +116,11 @@ function barChart(){
     .classed('rect', true)
   
   // append top bar (light purple)
+  
+  let clicked = false; 
   g.append("rect")
     .attr('x', function(d) {
+      //console.log(X(d))
       return X(d); //makes the bars by date
     })
     .attr('y', function(d) {
@@ -127,6 +131,17 @@ function barChart(){
     .attr('height', function(d) {
       return height - margin.bottom - Y1(d); //makes the height of the bar match its humidity
     })
+    .on('click', function(data, d) {
+      
+      if (clicked == true) {
+        clear_heatmap()
+        clicked = false
+      }
+      console.log(xValue(d))
+      heatmap(xValue(d))
+      clicked = true
+      
+		})
   
     // append bottom bar (darker purple)
     g.append("rect")
@@ -141,6 +156,23 @@ function barChart(){
     .attr('height', function(d) {
       return height - margin.bottom - Y2(d); //makes the y value humidity
     })
+
+    
+
+    /*d3.select(this).on('click', function(data, d) {
+      //clicked = false
+      /*if (clicked == true) {
+        clear_heatmap()
+        clicked = false
+      }
+      else{
+      console.log(xValue(d))
+      heatmap(xValue(d))
+      clicked = true
+      //}
+    })*/
+    
+    //d3.selectAll('#heatmap').on('click', clear_heatmap())
   
     colors = ['#9370DB', '#3A1D90']
     values = [90, 113]

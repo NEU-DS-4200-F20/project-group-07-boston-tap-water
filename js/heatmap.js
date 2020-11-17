@@ -1,18 +1,31 @@
 
-
 let margin = {top: 30, right: 200, bottom: 30, left: 30},
-  width = 300 - margin.left - margin.right,
-  height = 400 - margin.top - margin.bottom;
+width = 300 - margin.left - margin.right,
+height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 let svg = d3.select("#heatmap")
 .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.attr('id', 'heatmapid')
+//.on('click', clear_heatmap())
 .append("g")
+.attr("transform",
+      "translate(" + (margin.left + 100) + "," + margin.top + ")");
+
+d3.select('#heatmapid')
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+
+
+function heatmap(d){
+
+d3.select('#heatmap')
+  .append("g")
   .attr("transform",
         "translate(" + (margin.left + 100) + "," + margin.top + ")");
-
+  
         
 let title = svg
     .append('g')
@@ -33,7 +46,8 @@ let title = svg
 d3.csv("data/heatmap_data.csv").then(function(data){  
   //data = data.slice().sort((a, b) => d3.ascending(a.Proportion, b.Proportion))
   
-  let myGroups = ["3/1/19"]
+  let myGroups = [d]
+  //console.log(d)
   /*
   let myVars = ["Betaproteobacteria","Nitrospira","Gammaproteobacteria","Planctomycetia","Actinobacteria", "Oligoflexia","Gemmatimonadetes","Chlamydiia","Flavobacteriia","Deltaproteobacteria"]
   */
@@ -41,7 +55,7 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   let myVars = []
   
   for(i=0; i < 120; i++) { //makes an array with the bacteria phyla names
-    if (data[i].Date == "3/1/19"){
+    if (data[i].Date == d){
     myVars.push(data[i].Type)
     }
   }
@@ -50,11 +64,11 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   let subset = [];
 
   for(i=0; i < 120; i++) { //makes subset of data with corresponding date
-    if (data[i].Date == "3/1/19"){
+    if (data[i].Date == d){
     subset.push(data[i])
     }
   }
-  console.log(subset)
+  //console.log(subset)
   //myVars = myVars
     // Build X scales and axis:
   let x = d3.scaleBand()
@@ -99,3 +113,11 @@ svg.selectAll()
 	    return myColor(+d.Proportion)} )
 	  
 });
+
+}
+
+function clear_heatmap(){
+
+  d3.selectAll('#heatmapid > *').selectAll('g').remove()
+
+}
