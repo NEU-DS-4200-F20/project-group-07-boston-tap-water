@@ -156,6 +156,17 @@ function barChart(){
     .attr('height', function(d) {
       return height - margin.bottom - Y2(d); //makes the y value humidity
     })
+    .on('click', function(data, d) {
+      
+      if (clicked == true) {
+        clear_heatmap()
+        clicked = false
+      }
+      console.log(xValue(d))
+      heatmap(xValue(d))
+      clicked = true
+      
+		})
 
     
 
