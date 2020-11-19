@@ -108,15 +108,18 @@ function table() {
   	    clicked = false
   	    
   	    d3.selectAll('tr')
-				.classed('selected', false)
+			.classed('selected', false)
 				
-				d3.select(this)
-				.classed('selected', true)
+		d3.select(this)
+			.classed('selected', true)
 				
 				// Get the name of our dispatcher's event and tells the other graphs
 				// what actions are occuring
 				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 				dispatcher.call(dispatchString, this, table.selectAll('.selected').data());
+
+
+
   	  })
   	  
       

@@ -43,7 +43,25 @@ h1, h2, h3 {
   margin-right: auto ;
   border: .25px solid black;
 }
+/* Style for selected marks (circles) */
+#rect1.selected {
+	fill: pink;
+  }
 
+#rect2.selected {
+	fill: pink;
+  }
+
+rects.selected{
+
+	fill: pink;
+
+}
+  
+  /* Style for selected marks (table rows) */
+  tr.selected {
+	background-color: pink;
+  }
 
 
 table {

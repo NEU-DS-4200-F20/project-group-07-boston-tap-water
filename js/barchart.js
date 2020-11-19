@@ -23,6 +23,7 @@ function barChart(){
     };
   let width = 750 - margin.left - margin.right; 
   let height = 500 - margin.top - margin.bottom;
+  let dispatcher;
 
   // Create the chart by adding an svg to the div with the id 
   // specified by the selector using the given data
@@ -107,9 +108,9 @@ function barChart(){
     .style("font-weight", "bold")
     .text('Cell Count Over Time'); //adds Cell Count Over Time as text
   
-  
+    svg2.call(brush);
   //Draw bars
-  let g = svg2.selectAll(".rect")
+  let rects = svg2.selectAll(".rect")
     .data(data)
     .enter()
     .append("g")
@@ -118,7 +119,10 @@ function barChart(){
   // append top bar (light purple)
   
   let clicked = false; 
-  g.append("rect")
+
+  //rects = g.enter()
+    rects.append("rect")
+    .attr('id', 'rect1')
     .attr('x', function(d) {
       //console.log(X(d))
       return X(d); //makes the bars by date
@@ -144,7 +148,8 @@ function barChart(){
 		})
   
     // append bottom bar (darker purple)
-    g.append("rect")
+    rects.append("rect")
+    .attr('id', 'rect2')
     .attr('x', function(d) {
      return X(d); //makes the bars by date
     })
@@ -216,6 +221,51 @@ function barChart(){
         case 1: return "Membrane Intact Cells";
       }
     });
+
+    
+
+    // Highlight points when brushed
+    function brush(g) {
+      const brush = d3.brush()
+        .on('start brush', highlight)
+        .on('end', brushEnd)
+        .extent([
+          [-margin.left, -margin.bottom],
+          [width + margin.right, height + margin.top]
+        ]);
+
+      ourBrush = brush;
+
+      g.call(brush); // Adds the brush to this element
+
+      // Highlight the selected circles.
+      function highlight(event, d) {
+        if (event.selection === null) return;
+        const [
+          [x0, y0],
+          [x1, y1]
+        ] = event.selection;
+       
+        rects.classed('selected', d =>
+          x0 <= X(d) && X(d) <= x1 
+          //&& y0 <= Y2(d) && Y2(d) <= y1
+        );
+        // Get the name of our dispatcher's event
+        let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+
+        // Let other charts know
+        console.log(svg2.selectAll('.selected').data())
+        dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
+        
+      }
+      
+      function brushEnd(event, d) {
+        // We don't want infinite recursion
+        if(event.sourceEvent !== undefined && event.sourceEvent.type!='end'){
+          d3.select(this).call(brush.move, null);
+        }
+      }
+    }
   
     return chart;
 }
