@@ -5,7 +5,7 @@ let dispatcher;
 // Initialize a table.
 function table() {
   // set the columns, selectableElements and dispatcher to their default values
-  let columns = ['Date', 'Season', 'Temperature(degrees C)', 'pH', 'Chlorine(mg/L)', 'Ammonium(uM)', 'Nitrate(uM)', 'Nitrite(uM)']
+  let columns = ['Date', 'Season', 'Temperature(degrees C)', 'pH', 'Chlorine(mg/L)', 'Ammonium(micromolar)', 'Nitrate(micromolar)', 'Nitrite(micromolar)']
   selectableElements = d3.select(null);
   
   

@@ -108,6 +108,40 @@ function barChart(){
     .style("font-weight", "bold")
     .text('Cell Count Over Time'); //adds Cell Count Over Time as text
   
+    colors = ['#9370DB', '#3A1D90']
+    values = [90, 113]
+  
+  // append a legend onto the chart
+  let legend = svg2.selectAll(".legend")
+    .data(colors)
+    .enter().append("g")
+    .attr("class", "legend")
+    .attr("transform", function(d, i) { return "translate(30," + values[i] + ")"; });
+  
+  // append the boxes in the legenc
+  legend.append("rect")
+    .attr("x", 350)
+    //.attr ("y", height2 + 20)
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", function(d, i) {return colors[i];});
+  
+  // append the text to the legenc
+  legend.append("text")
+    .attr("x", 373)
+    .attr("y", 10)
+    .attr("dy", ".15em")
+    .attr("font-size", "12px")
+    .style("text-anchor", "start")
+    .style('fill', 'black')
+    .text(function(d, i) {
+      switch (i) {
+        case 0: return "Membrane Non-Intact Cells";
+        case 1: return "Membrane Intact Cells";
+      }
+    });
+
+
     svg2.call(brush);
   //Draw bars
   let rects = svg2.selectAll(".rect")
@@ -190,7 +224,7 @@ function barChart(){
     
     //d3.selectAll('#heatmap').on('click', clear_heatmap())
   
-    colors = ['#9370DB', '#3A1D90']
+    /*colors = ['#9370DB', '#3A1D90']
     values = [90, 113]
   
   // append a legend onto the chart
@@ -221,7 +255,7 @@ function barChart(){
         case 1: return "Membrane Intact Cells";
       }
     });
-
+*/
     
 
     // Highlight points when brushed
