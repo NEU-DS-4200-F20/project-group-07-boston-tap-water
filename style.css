@@ -43,16 +43,7 @@ h1, h2, h3 {
   margin-right: auto ;
   border: .25px solid black;
 }
-/* Style for selected marks (circles) */
-/*
-#rect1.selected a{
-	fill: pink;
-  }
 
-#rect2.selected a{
-	fill: pink;
-  }
-*/
 g.rect.selected {
 	stroke: red;
 	stroke-width: 3;
@@ -62,6 +53,11 @@ tr.selected {
 	background-color: pink;
 }
 
+svg rect.foo {
+  stroke-width: 0.75;
+  stroke: black;
+	fill: none;
+}
 
 table {
   font-size: 14px;
