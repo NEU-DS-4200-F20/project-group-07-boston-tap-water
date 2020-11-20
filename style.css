@@ -33,7 +33,7 @@ h1, h2, h3 {
   margin-right: auto ;
   display: flex;
 
-  
+
 }
 
 #heatmapid a{
@@ -44,24 +44,23 @@ h1, h2, h3 {
   border: .25px solid black;
 }
 /* Style for selected marks (circles) */
-#rect1.selected {
+/*
+#rect1.selected a{
 	fill: pink;
   }
 
-#rect2.selected {
+#rect2.selected a{
 	fill: pink;
   }
-
-rects.selected{
-
-	fill: pink;
-
+*/
+g.rect.selected {
+	stroke: red;
+	stroke-width: 3;
 }
-  
   /* Style for selected marks (table rows) */
-  tr.selected {
+tr.selected {
 	background-color: pink;
-  }
+}
 
 
 table {
@@ -79,7 +78,8 @@ th, td {
   padding: 2px 6px;
 }
 
-table.text-unselectable {
+/* Don't also do text drag selection */
+.text-unselectable { /* linked to table element in index.html file */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -88,6 +88,18 @@ table.text-unselectable {
   -o-user-select: none;
   user-select: none;
   cursor: default;
+}
+
+/* Recreate the D3 brush style... */
+/* edited based on https://www.w3schools.com/cssref/sel_hover.asp */
+tr:hover {
+  background-color: #d6d6d6;
+}
+
+/* ...but add a darker selected and brushed color. */
+/* edited based on https://www.w3schools.com/cssref/sel_hover.asp */
+tr.selected:hover {
+  background-color: #e08fa3;
 }
 
 .table-holder {
@@ -116,7 +128,7 @@ table.text-unselectable {
 }
 
 
-/* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
+/* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */
 #forkongithub a{
 	background:#00F;
 	color:#fff;

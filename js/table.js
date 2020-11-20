@@ -2,155 +2,96 @@
 
 let dispatcher;
 
-// Initialize a table.
-function table() {
-  // set the columns, selectableElements and dispatcher to their default values
-  let columns = ['Date', 'Season', 'Temperature(degrees C)', 'pH', 'Chlorine(mg/L)', 'Ammonium(micromolar)', 'Nitrate(micromolar)', 'Nitrite(micromolar)']
-  selectableElements = d3.select(null);
-  
-  
-  // Create the chart by adding a table to the div with the id 
-  // specified by the selector using the given data
-  function chart(selector, data) {
-  	var table = d3.select(selector)
-  	.append('table')
-  	.style("border", "1px black solid")
-  	var thead = table.append('thead')
-  	var	tbody = table.append('tbody');
-  	
-  
-  	// append the header row
-  	thead.append('tr')
-  	  .selectAll('th')
-  	  .data(columns).enter()
-  	  .append('th')
-  	    .text(function (column) { return column; });
-  
-  	// create a row for each object in the data
-  	var rows = tbody.selectAll('tr')
-  	  .data(data)
-  	  .enter()
-  	  .append('tr')
-  	  .classed('selected', function(d) { return d._selected; })
-  	 
-      // mouse events called by dispatch
-		.on('mousedown', function(d) {
-		  dispatch.call('dragstarted', this)
-		})
-		.on('mousemove', function(d) {
-		  dispatch.call('dragged', this)
-		})
-		.on('mouseup', function(d) {
-		  dispatch.call('dragended', this)
-		})
-		.on('click', function(d) {
-		  dispatch.call('clear', this)
-		})
-		
-		
-		
-		selectableElements = rows;
-      
-  	// create a cell in each row for each column
-  	var cells = rows.selectAll('td')
-  	  .data(function (row) {
-  	    return columns.map(function (d, i) {
-  	      return {i: d, value: row[d]};
-  	    });
-  	  })
-  	  .enter()
-  	  .append('td')
-  	    .text(function (d) { return d.value; })
-  	    .enter()
-  	 
-  	 
-  	 // declare dispatch and the fucntions called with it:   
-  	  let dispatch = d3.dispatch('dragstarted', 'dragged', 'dragended', 'clear');
-  	  
-  	  // determines when the mouse is being held down
-  	  let down= false;
-  	  
-  	  // mousedown function: resets all of the rows to not be selected and 
-  	  // selects the given row
-  	  dispatch.on('dragstarted', function() {
-  	    down = true
-  	    d3.selectAll('tr')
-  	    .classed('selected', false)
-  	    
-        d3.select(this)
-				.classed('selected', true);
-  	  })
-  	  
-  	  // mousemove function: if the mouse is down and moving, the cells that are 
-  	  // being dragged across are selected (and highlighted)
-  	  dispatch.on('dragged', function() {
-  	    if (down) {
-				d3.select(this)
-				.classed('selected', true)
-				
-				d3.selectAll('.selected')
-				
-				// Get the name of our dispatcher's event and tells the other graphs
-				// what actions are occuring
-				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
-        dispatcher.call(dispatchString, this, table.selectAll('.selected').data());
-        }
-  	  })
-  	  
-  	  // mouseup function: the mouse is lifted so the down is set to false
-  	  dispatch.on('dragended', function() {
-        down = false
-  	  })
-  	  
-  	  // click function: when the mouse is clicked on the table, all the rows 
-  	  // should clear except the row was clicked
-  	  dispatch.on('clear', function() {
-  	    clicked = false
-  	    
-  	    d3.selectAll('tr')
-			.classed('selected', false)
-				
-		d3.select(this)
-			.classed('selected', true)
-				
-				// Get the name of our dispatcher's event and tells the other graphs
-				// what actions are occuring
-				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
-				dispatcher.call(dispatchString, this, table.selectAll('.selected').data());
+let c = false; // clicked
+let t = d3.dispatch('start', 'hold', 'end');
 
+t.on('start', function(){ // for single selection (one row) or start of drag
+  d3.selectAll('tr').classed('selected', false); // "clear" (unselect/unhighlight) all rows
+  d3.select(this).classed('selected', true); // select/highlight row that was clicked on
+  c = true;
 
+  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; // Get the name of our dispatcher's event
+  dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data()); // Let other charts know of selected item/row in table
+})
 
-  	  })
-  	  
-      
-      
-    return chart;
+t.on('hold', function(){ // for mouse drag action - selecting/highlighting multiple rows
+  // Select/highlight each row only if mouse was already clicked previously
+  if(c == true){
+    d3.select(this).classed('selected', true);
   }
-  
-  
+  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; // Get the name of our dispatcher's event
+  dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data()); // Let other charts know of selected items/rows in table
+})
+
+t.on('end', function(){ // for end of click/drag, indicates end of selection(s)
+  c = false;
+})
+
+
+function table(){
+
+  let header = ['Date', 'Season', 'Temperature(degrees C)', 'pH', 'Chlorine(mg/L)', 'Ammonium(micromolar)', 'Nitrate(micromolar)', 'Nitrite(micromolar)']; // column names
+
+  function tabulate(selector, data){
+
+    let tbl = d3.select(selector).append('table')
+    .style("border", "1px black solid")
+    let thead = tbl.append('thead') // sets up table head (header row)
+    let tbody = tbl.append('tbody'); // sets up table body
+
+    // Appends header row
+    thead.append('tr')
+    .selectAll('th')
+    .data(header) // loads column names initiated above
+    .enter()
+    .append('th')
+    .text(function(column){return column;}); // adds text which displays each header name
+
+    // Creates a row for each object in the data
+    let rows = tbody.selectAll('tr')
+    .data(data)
+    .enter()
+    .append('tr')
+
+    // Dispatches custom events defined above
+    .on('mousedown', function(){t.call('start', this)}) // when mouse is down, invoke 'start' callback
+    .on('mousemove', function(){t.call('hold', this)}) // when mouse is moved (i.e. dragged), invoke 'hold' callback
+    .on('mouseup', function(){t.call('end', this)}) // when mouse is up/released, invoke 'end' callback
+
+    // Creates a cell in each row for each column
+    let cells = rows.selectAll('td')
+    // Maps each column of data to corresponding header
+    // & data value that falls under each row for each column
+    .data(function(row){
+      return header.map(function(column){
+        return {column: column, value: row[column]};
+      });
+    })
+    .enter()
+    .append('td')
+    .text(function(d){return d.value;}); // adds text to each cell that displays value from data
+
+    return tabulate;
+
+  }
+
   // Gets or sets the dispatcher we use for selection events
-  chart.selectionDispatcher = function (_) {
-    if (!arguments.length) return dispatcher;
+  tabulate.selectionDispatcher = function(_){
+    if(!arguments.length) return dispatcher;
     dispatcher = _;
-    return chart;
+    return tabulate;
   };
 
-  // Given selected data from another visualization 
+  // Given selected data from another visualization
   // select the relevant elements here (linking)
-  chart.updateSelection = function (selectedData) {
-    if (!arguments.length) {
-      
-      return;
-    }
-
-    selectableElements.classed('selected', false)
-    
-    // Select an element if its datum was selected
-    selectableElements.classed('selected', d =>
+  tabulate.updateSelection = function(selectedData){
+    if(!arguments.length) return;
+    // Select an element (table row) if its datum was selected
+    d3.selectAll('tr').classed('selected', d =>
       selectedData.includes(d)
     );
-  }
-  
-  
-  return chart;
-}
+  };
+
+  return tabulate;
+
+};
