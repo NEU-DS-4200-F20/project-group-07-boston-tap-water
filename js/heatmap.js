@@ -44,14 +44,8 @@ let title = svg
 
 
 d3.csv("data/heatmap_data.csv").then(function(data){
-  //data = data.slice().sort((a, b) => d3.ascending(a.Proportion, b.Proportion))
 
   let myGroups = [d]
-  //console.log(d)
-  /*
-  let myVars = ["Betaproteobacteria","Nitrospira","Gammaproteobacteria","Planctomycetia","Actinobacteria", "Oligoflexia","Gemmatimonadetes","Chlamydiia","Flavobacteriia","Deltaproteobacteria"]
-  */
-  //console.log(data[0].Type)
   let myVars = []
 
   for(i=0; i < 120; i++) { //makes an array with the bacteria phyla names
@@ -59,7 +53,6 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     myVars.push(data[i].Type)
     }
   }
-  //console.log(myVars)
 
   let subset = [];
 
@@ -68,8 +61,7 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     subset.push(data[i])
     }
   }
-  //console.log(subset)
-  //myVars = myVars
+
     // Build X scales and axis:
   let x = d3.scaleBand()
     .range([ 0, width ])
@@ -87,20 +79,14 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   svg.append("g")
     .call(d3.axisLeft(y));
 
-  // Build color scale
-  /*let myColor = d3.scaleSequential()
-    .range(["#FFECEC", "red"])
-    .domain([0, 5.95])*/
 
   let myColor = d3.scaleSequential()
       .interpolator(d3.interpolateGreens)
       .domain([.1, 6])
 
 
-//console.log(data)
-let tooltip = "x";
-let tooltip_x = 0;
-let tooltip_y = 0;
+
+
 svg.selectAll()
 .data(subset, function(d) {
   return d.Date + ':' + d.Type})
@@ -114,27 +100,26 @@ svg.selectAll()
 	  .style("fill", function(d) {  //fills color based on proportion values
 	    console.log(d.Proportion)
 	    return myColor(+d.Proportion)} )
-    .append("text")
-    .attr("x", function(d) { return x(d.Date) })
-    .attr("y", function(d) { return y(d.Type) })
-    .attr('font-size', "12px")
-    .attr('fill-opacity', 0)
-    .text(function(d) { return (+d.Proportion).toString() })
+  /*
+  .on("mouseover", onMouseOver) // calls and executes actions written in onMouseOver function
+  .on("mouseout", onMouseOut) // calls and executes actions written in onMouseOut function
+  */
+  let texts = svg.selectAll(".text") 
+    .data(subset, function(d) {   return d.Date + ':' + d.Type}) 
+    .enter() 
+    .append("text");  
 
-d3.select("svg").selectAll("rect")
-  .on("mouseover", function(d) {
-      //d3.select(this).text(tooltip)
-      tooltip_x = x(d.Date)
-      tooltip_y = y(d.Type)
-      tooltip = (+d.Proportion).toString()
+  texts 
+    .attr("x", function(d) { return x(d.Date) + 15 }) 
+    .attr("y", function(d) { return y(d.Type) + 24 }) 
+    .attr('font-size', "12px")   .attr("fill", "#FD1783")  
+    .attr('fill-opacity', 0) 
+    .text(function(d) { return (+d.Proportion).toString() + "%" }) 
+    .on("mouseover", function(d){ 
+      d3.select(this).attr('fill-opacity', 1)    }) 
+    .on("mouseout", function(d){ 
+      d3.select(this).transition().delay(500).attr('fill-opacity', 0)})
 
-      d3.select("rect")
-      .append("text")
-      .attr("x", tooltip_x)
-      .attr("y", tooltip_y)
-      .attr('font-size', "12px")
-      .text(tooltip)
-    })
 
 
   let min = 0;
@@ -183,3 +168,25 @@ function clear_heatmap(){
   d3.selectAll('#heatmapid > *').selectAll('g').remove()
 
 }
+
+/*
+// Function for the actions that occur during a mouseover event
+function onMouseOver(event, f) {
+  d3.select(this) // identifies which rect is being hovered over
+  svg.append('text')
+  .attr('class', 'details')
+  .attr('x', 98) // x position of text
+  .attr('y', 330) // y position of text
+  .attr('font-size', '17') // font size of text
+  .attr("stroke", "black")
+  .attr("stroke-width", "1px")
+  .text(function() { // defines content of the textbox
+    return [f.Proportion + "%"];
+  });
+}
+
+// Function for the actions that occur during a mouseout event
+function onMouseOut(event, f) {
+  d3.selectAll('.details') // removes textbox with details from chart
+  .remove()
+}*/
