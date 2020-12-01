@@ -1,8 +1,15 @@
 
+function fullheatmap(){
 
 let margin = {top: 30, right: 200, bottom: 30, left: 100},
-width = 500 - margin.left - margin.right,
-height = 400 - margin.top - margin.bottom;
+    width = 900 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+
+function chart(selector, data){
+
+
+
 
 // append the svg object to the body of the page
 let svg = d3.select("#heatmap")
@@ -19,7 +26,7 @@ let svg = d3.select("#heatmap")
 .attr("width", width + margin.left + margin.right)
 .attr("height", height + margin.top + margin.bottom)*/
 
-function heatmap(d){
+
 
   
 
@@ -44,12 +51,7 @@ let title = svg
 // Labels of row and columns
 
 
-
-
-
-d3.csv("data/heatmap_data.csv").then(function(data){
-
-  let myGroups = d
+  //let myGroups = []
   //let myVars = []
 
   let myVars = ["Betaproteobacteria", "Nitrospira", "Gammaproteobacteria", "Actinobacteria", "Oligoflexia", "Gemmatimonadetes", "Planctomycetia", "Flavobacteriia", "Deltaproteobacteria", "Chlamydiia"]
@@ -60,11 +62,11 @@ d3.csv("data/heatmap_data.csv").then(function(data){
     }
   }*/
 
-  let subset = [];
+  let myGroups = [];
 
   for(i=0; i < 120; i++) { //makes subset of data with corresponding date
-    if (myGroups.includes(data[i].Date)){
-    subset.push(data[i])
+    if (!(myGroups.includes(data[i].Date))){
+    myGroups.push(data[i].Date)
     }
   }
 
@@ -166,15 +168,13 @@ texts
   .attr("width", 30)
   .attr("height", 200)
 
-});
-
+  return chart;
+};
+    return chart;
 }
 
-function clear_heatmap(){
 
-  d3.selectAll('#heatmapid > *').selectAll('g').remove()
 
-}
 
 /*
 // Function for the actions that occur during a mouseover event

@@ -19,6 +19,9 @@
    .selectionDispatcher(d3.dispatch(dispatchString))
    ('#barchart', data);
 
+   //let fullheatmap = fullheatmap()
+   //('#heatmap', data);
+
    let overallTable = table()
      .selectionDispatcher(d3.dispatch(dispatchString))
       ('#table', data);

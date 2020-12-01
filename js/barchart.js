@@ -3,7 +3,7 @@
 function barChart(){
 
     let xValue = d => d[0]
-    console.log(xValue)
+    //console.log(xValue)
     let y1Value = d => d[1],
     y2Value = d => d[2],
     xLabelText = '',
@@ -35,7 +35,7 @@ function barChart(){
     let maxCount = d3.max(data, d => y1Value(d));
 
     //prints out these values in console
-    console.log(maxDate, minDate, maxCount, d3.max(data, d => y2Value(d)));
+    //console.log(maxDate, minDate, maxCount, d3.max(data, d => y2Value(d)));
 
     let svg2 = d3.select('#barchart')
     .append('svg')
@@ -45,6 +45,7 @@ function barChart(){
     .attr('height', height + margin.top + margin.bottom)
     .style('background-color', '#fff') // change the background color to white
     .attr('viewBox', [0, 0, width + margin.left + margin.right , height + margin.top + margin.bottom].join(' '))
+  
 
     //Define scales
     yScale
@@ -59,6 +60,7 @@ function barChart(){
     )
     .range([margin.left, width - margin.right]) //scales it to fit between the left and right margins
     .padding(0.5);
+
 
   //Draw axis
   let yAxis = svg2
@@ -168,16 +170,21 @@ function barChart(){
       return height - margin.bottom - Y1(d); //makes the height of the bar match its humidity
     })
     .on('click', function(data, d) {
-
-      if (clicked == true) {
+      //d3.select('.rect').attr("class", 'selected')
+      //rects.classed('selected', d=> X(d)) 
+      //highlight()
+     /* if (clicked == true) {
         clear_heatmap()
         clicked = false
       }
       console.log(xValue(d))
       heatmap(xValue(d))
       clicked = true
-
-		})
+*/
+    })
+ 
+    
+    
 
     // append bottom bar (darker purple)
     rects.append("rect")
@@ -194,16 +201,21 @@ function barChart(){
       return height - margin.bottom - Y2(d); //makes the y value humidity
     })
     .on('click', function(data, d) {
+      //d3.select('.rect').attr("class", 'selected')
+      //rects.classed('selected', d=> X(d))
+      //highlight()
 
-      if (clicked == true) {
+      /*if (clicked == true) {
         clear_heatmap()
         clicked = false
       }
       console.log(xValue(d))
       heatmap(xValue(d))
       clicked = true
-
-		})
+*/
+    })
+   
+    
 
 
 
@@ -222,43 +234,12 @@ function barChart(){
 
     //d3.selectAll('#heatmap').on('click', clear_heatmap())
 
-    /*colors = ['#9370DB', '#3A1D90']
-    values = [90, 113]
-
-  // append a legend onto the chart
-  let legend = svg2.selectAll(".legend")
-    .data(colors)
-    .enter().append("g")
-    .attr("class", "legend")
-    .attr("transform", function(d, i) { return "translate(30," + values[i] + ")"; });
-
-  // append the boxes in the legenc
-  legend.append("rect")
-    .attr("x", 350)
-    //.attr ("y", height2 + 20)
-    .attr("width", 18)
-    .attr("height", 18)
-    .style("fill", function(d, i) {return colors[i];});
-
-  // append the text to the legenc
-  legend.append("text")
-    .attr("x", 373)
-    .attr("y", 10)
-    .attr("dy", ".15em")
-    .attr("font-size", "12px")
-    .style("text-anchor", "start")
-    .text(function(d, i) {
-      switch (i) {
-        case 0: return "Membrane Non-Intact Cells";
-        case 1: return "Membrane Intact Cells";
-      }
-    });
-*/
-
+    
 
     // Highlight points when brushed
     function brush(g) {
       const brush = d3.brush()
+        //.on("click", highlight)
         .on('start brush', highlight)
         .on('end', brushEnd)
         .extent([
@@ -272,27 +253,52 @@ function barChart(){
 
       // Highlight the selected circles.
       function highlight(event, d) {
-        if (event.selection === null) return;
+        
+        if (event.selection === null) return ;
         const [
-          [x0, y0],
-          [x1, y1]
+          [x0],
+          [x1]
         ] = event.selection;
+        //console.log(x0, x1)
 
         rects.classed('selected', d =>
-          x0 <= X(d) && X(d) <= x1
+          x0 <= X(d) && X(d) <= x1 
+          //&& x0 >= X(d) && X(d) >= x1
           //&& y0 <= Y2(d) && Y2(d) <= y1
         );
+
+        //console.log(d3.select(".rect").classed('selected', true))
+      
         // Get the name of our dispatcher's event
         let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 
         // Let other charts know
-        console.log(svg2.selectAll('.selected').data())
+        //console.log(svg2.selectAll('.selected').data())
+
+        /*groups = svg2.selectAll('.selected').data()
+        let set = []
+        for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+          set.push(groups[i].Date)  
+        }
+        console.log(set)
+        clear_heatmap()
+        heatmap(set)*/
+        
         dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
 
       }
 
       function brushEnd(event, d) {
         // We don't want infinite recursion
+        groups = svg2.selectAll('.selected').data()
+        let set = []
+        for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+          set.push(groups[i].Date)  
+        }
+        console.log(set)
+        clear_heatmap()
+        heatmap(set)
+
         if(event.sourceEvent !== undefined && event.sourceEvent.type!='end'){
           d3.select(this).call(brush.move, null);
         }

@@ -10,8 +10,24 @@ t.on('start', function(){ // for single selection (one row) or start of drag
   d3.select(this).classed('selected', true); // select/highlight row that was clicked on
   c = true;
 
-  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; // Get the name of our dispatcher's event
-  dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data()); // Let other charts know of selected item/row in table
+  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; 
+  
+  groups = d3.select('table').selectAll('.selected').data()
+  let set = []
+  for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+      set.push(groups[i].Date)  
+    }
+    console.log(set)
+    clear_heatmap()
+    heatmap(set)
+    
+    
+    // Get the name of our dispatcher's event
+  dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data());
+  
+  
+  
+  // Let other charts know of selected item/row in table
 })
 
 t.on('hold', function(){ // for mouse drag action - selecting/highlighting multiple rows
@@ -19,7 +35,21 @@ t.on('hold', function(){ // for mouse drag action - selecting/highlighting multi
   if(c == true){
     d3.select(this).classed('selected', true);
   }
-  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; // Get the name of our dispatcher's event
+  let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+  
+  groups = d3.select('table').selectAll('.selected').data()
+  let set = []
+  for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+      set.push(groups[i].Date)  
+    }
+    console.log(set)
+    clear_heatmap()
+  if(set.length !== 0) {
+    
+    heatmap(set)
+  }
+    
+    // Get the name of our dispatcher's event
   dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data()); // Let other charts know of selected items/rows in table
 })
 
