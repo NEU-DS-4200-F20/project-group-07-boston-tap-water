@@ -1,7 +1,7 @@
 
 
 let margin = {top: 30, right: 200, bottom: 30, left: 100},
-width = 500 - margin.left - margin.right,
+width = 800 - margin.left - margin.right,
 height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -101,11 +101,12 @@ svg.selectAll()
     .attr("class", "foo")
 	  .attr("x", function(d) { return x(d.Date) })
 	  .attr("y", function(d) { return y(d.Type) })
-	  .attr("width", x.bandwidth() )
+	  .attr("width", x.bandwidth())
 	  .attr("height", y.bandwidth() )
 	  .style("fill", function(d) {  //fills color based on proportion values
 	    //console.log(d.Proportion)
-	    return myColor(+d.Proportion)} )
+      return myColor(+d.Proportion)} )
+    
   /*
   .on("mouseover", onMouseOver) // calls and executes actions written in onMouseOver function
   .on("mouseout", onMouseOut) // calls and executes actions written in onMouseOut function
@@ -116,7 +117,7 @@ svg.selectAll()
     .append("text");
 
 texts
-    .attr("x", function(d) { return x(d.Date) + 15})
+    .attr("x", function(d) { return x.bandwidth()/2})
     .attr("y", function(d) {return y(d.Type) + 24 })
     .attr('font-size', "12px")
     .attr("fill", "#FD1783")

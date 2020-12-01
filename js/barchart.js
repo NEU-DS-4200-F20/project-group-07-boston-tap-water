@@ -156,7 +156,10 @@ function barChart(){
 
   //rects = g.enter()
     rects.append("rect")
-    .attr('id', 'rect1')
+    .attr('id', function(d){  
+      str = "rect1" + xValue(d)
+      return str.replace(new RegExp('/', 'g'), "_")
+    })
     .attr('x', function(d) {
       //console.log(X(d))
       return X(d); //makes the bars by date
@@ -169,8 +172,23 @@ function barChart(){
     .attr('height', function(d) {
       return height - margin.bottom - Y1(d); //makes the height of the bar match its humidity
     })
-    .on('click', function(data, d) {
-      //d3.select('.rect').attr("class", 'selected')
+    .on('click', function(event, d) {
+      
+      //d3.select('#' + r).node().parentNode.classed('selected', true)
+      d3.select(this.parentNode).classed('selected', true)
+      //d3.select('#' + r).attr("class", 'selected')
+      let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+      
+      dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
+
+      groups = svg2.selectAll('.selected').data()
+        let set = []
+        for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+          set.push(groups[i].Date)  
+        }
+        console.log(set)
+        clear_heatmap()
+        heatmap(set)
       //rects.classed('selected', d=> X(d)) 
       //highlight()
      /* if (clicked == true) {
@@ -188,7 +206,10 @@ function barChart(){
 
     // append bottom bar (darker purple)
     rects.append("rect")
-    .attr('id', 'rect2')
+    .attr('id', function(d){  
+      str = "rect2" + xValue(d)
+      return str.replace(new RegExp('/', 'g'), "_")
+    })
     .attr('x', function(d) {
      return X(d); //makes the bars by date
     })
@@ -201,7 +222,22 @@ function barChart(){
       return height - margin.bottom - Y2(d); //makes the y value humidity
     })
     .on('click', function(data, d) {
-      //d3.select('.rect').attr("class", 'selected')
+      //console.log(d)
+      d3.select(this.parentNode).classed('selected', true)
+      //d3.select('#' + r).attr("class", 'selected')
+      let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+      
+      dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
+
+      groups = svg2.selectAll('.selected').data()
+        let set = []
+        for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
+          set.push(groups[i].Date)  
+        }
+        console.log(set)
+        clear_heatmap()
+        heatmap(set)
+      //d3.select('#rect2' + xValue(d)).classed('selected', true)
       //rects.classed('selected', d=> X(d))
       //highlight()
 
@@ -239,6 +275,7 @@ function barChart(){
       function highlight(event, d) {
         
         if (event.selection === null) return ;
+        //if(event.selection === )
         const [
           [x0],
           [x1]
