@@ -218,22 +218,6 @@ function barChart(){
     
 
 
-
-    /*d3.select(this).on('click', function(data, d) {
-      //clicked = false
-      /*if (clicked == true) {
-        clear_heatmap()
-        clicked = false
-      }
-      else{
-      console.log(xValue(d))
-      heatmap(xValue(d))
-      clicked = true
-      //}
-    })*/
-
-    //d3.selectAll('#heatmap').on('click', clear_heatmap())
-
     
 
     // Highlight points when brushed

@@ -11,16 +11,16 @@ t.on('start', function(){ // for single selection (one row) or start of drag
   c = true;
 
   let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0]; 
-  
-  groups = d3.select('table').selectAll('.selected').data()
+  //clear_heatmap()
+  /*groups = d3.select('table').selectAll('.selected').data()
   let set = []
   for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
       set.push(groups[i].Date)  
     }
     console.log(set)
-    clear_heatmap()
-    heatmap(set)
     
+    heatmap(set)
+    */
     
     // Get the name of our dispatcher's event
   dispatcher.call(dispatchString, this, d3.select('table').selectAll('.selected').data());
@@ -44,6 +44,7 @@ t.on('hold', function(){ // for mouse drag action - selecting/highlighting multi
 })
 
 t.on('end', function(){ // for end of click/drag, indicates end of selection(s)
+  clear_heatmap()
   groups = d3.select('table').selectAll('.selected').data()
   let set = []
   for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
