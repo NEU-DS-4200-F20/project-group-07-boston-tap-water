@@ -43,11 +43,18 @@
 
     <h1>Abstract</h1>
 
-    <p>The Massachusetts Water Resources Authority supplies water to over 2.5 million people in the Boston area. The Pinto lab investigates the characteristics of the microbiome in this tap water in order to ensure safe drinking water is being distributed, focusing on the complete ammonia oxidizer bacterial communities in tap water. This project seeks to visualize characteristics of tap water, creating a visual “story” which combines data from all characteristics, both chemical and genomic, taken of tap water over a time series.</p>
+    <p>The Massachusetts Water Resources Authority supplies water to over 2.5 million people in the Boston area. The Pinto lab investigates the characteristics of the microbiome in this tap water in order to ensure safe drinking water is being distributed, focusing on the complete ammonia oxidizer bacterial communities in tap water. This project seeks to visualize characteristics of tap water, creating a visual “story” which combines data from all characteristics, both chemical and genomic, taken of tap water over a time series. We produced a webpage encoding three visualizations – a stacked bar chart, table and heatmap – with the goal of discovering patterns to help scientist and researchers model the behavior of bacterial communities in order to improve water filtration and distribution systems.</p>
 
 
     <h1>Visualization</h1>
-    <p>Click on a bar to see corresponding bacterial phyla heatmap.</p>
+    <p>
+      <ul>
+        <li>Hover over bars on the barchart to view the precise cell counts.</li>
+        <li>Hover over cells on the heatmap to view the exact bacteria phyla percentages.</li>
+        <li>Select a bar or bars and brush over a row or multiple rows to see the corresponding data represented in the other two charts.</li>
+      </ul>
+      * NOTE: The Membrane Non-Intact Cells represents the amount of cells with non-intact membranes, while the Membrane Intact Cells represents the amount of cells with intact membranes. These values add up to equal the total cell count in the water.
+    </p>
 
 
   </div>
@@ -81,13 +88,14 @@
 
     <h1>Visualization explanation</h1>
 
-    <p>Replace with a brief explanation (can be copied from the paper) and linked presentation slides.</p>
-    <p>For our main view, we implemented a stacked bar chart that illustrated the total cell count over time. The stacks also allow comparison between the membrane intact cells and membrane non-intact cells within each run or date. Instead of using two separate colors for encoding the two cell count subcategories, we decided to use one color of different saturations – a lighter purple to represent the membrane non-intact cell count and a darker purple for the membrane intact cell count. </p>
+    <p><a href='https://docs.google.com/presentation/d/1eaeB_yK6aa-en1W-NkbdkcuR9NtAcL1NckwAI2Lhipg/edit?usp=sharing'>Presentation Slides</a></p>
+    <p>We created three visualizations: a bar chart, heatmap, and table. Our main view is the stacked bar chart, and it illustrates the total cell concentration over time. The membrane intact cell count is encoded in a darker purple, while the membrane non-intact cell count is encoded in a lighter purple. We used colors of the same hue but of different saturations because they are parts of the same total cell count. Users can hover over each bar to see the exact cell counts. The stacks allow comparison between the membrane intact cells and membrane non-intact cells within each run or date.</p>
 
-      <p>Our details on demand feature was illustrated in an ordered heatmap. The heatmap uses a sequential colormap to encode the proportions of the ten most prevalent bacterial phyla overall: Betaproteobacteria, Nitrospira, Gammaproteobacteria, Planctomycetia, Actinobacteria, Oligoflexia, Gemmatimonadetes, Chlamydiia, Flavobacteriia, and Deltaproteobacteria. Users will be able to click on a bar in the main stacked barchart, which will reveal the ordered heatmap for that chosen run or date. We used a red-white scale so that the bacteria with higher proportions would be emphasized, allowing for easy comparison. </p>
+      <p>For our details on demand feature, users can click on any of the bars, brush over a series of bars on the bar chart, or brush over rows on the table to view a corresponding heatmap. The heatmap uses a green-white sequential colormap to encode the percentages of the ten most prevalent bacterial phyla overall: Betaproteobacteria, Nitrospira, Gammaproteobacteria, Planctomycetia, Actinobacteria, Oligoflexia, Gemmatimonadetes, Chlamydiia, Flavobacteriia, and Deltaproteobacteria. We also included a legend to the left of the heatmap to illustrate the range of percentages. Additionally, upon hovering over each box in the heatmap, users are able to view the exact percentages for each of the phyla.</p>
 
-      <p>For the table, we showed an overview of the chemical data: Date, Season, Temperature, pH, Chlorine, Ammonium, Nitrate, and Nitrite. Our brushing and linking functionality will allow users to brush over rows in the table, highlighting them as well as the corresponding bars in the main barchart.
-      </p>
+      <p>For the table, we showed an overview of the chemical data: Date, Season, Temperature, pH, Chlorine, Ammonium, Nitrate, and Nitrite. Our brushing and linking functionality will allow users to brush over rows in the table, highlighting them as well as outlining the corresponding bars in the main bar chart.</p>
+
+      <p>Finally, our brushing and linking feature connects the bar chart to the table. When a user brushes over rows in the table, the selected rows are highlighted, the corresponding bars are outlined in red. When a user brushes over bars in the bar chart or clicks on certain bars, the selected bars are outlined in red and the corresponding rows are highlighted. In both cases, the corresponding heatmap for the selected dates is displayed. When no data is selected in the other two charts, the full heatmap with all dates and phyla is shown.</p>
 
     <h1>Acknowledgments</h1>
 
@@ -104,17 +112,16 @@
         Pure CSS responsive 'Fork me on GitHub' ribbon</a>
         by Chris Heilmann is used to create the banner that links back to the source code repository.
       </li>
-      <li><a href='https://stackoverflow.com/questions/52821117/how-to-append-multiple-rectangles-in-d3'>
-        How to append multiple rectangles</a>
-        by i alarmed alien on Stack Overflow.
-      </li>
-      <li><a href='http://bl.ocks.org/mstanaland/6100713'>
-        How to make a legend</a>
-        by Michael Stanaland.
-      </li>
-      <li><a href = "https://bl.ocks.org/melt6457/712da3556e18fa517e2cd9d432933bce">How to make a heatmap</a> by Kory Melton</li>
-      <li><a href = "https://www.tutorialsteacher.com/d3js/animated-bar-chart-d3">Animated Bar Chart</a> by Kory Melton</li>
-      <li><a href = "https://bl.ocks.org/d3noob/180287b6623496dbb5ac4b048813af52">Simple Tooltips in V6</a> by d3noob</li>
+      <li><a href='https://stackoverflow.com/questions/52821117/how-to-append-multiple-rectangles-in-d3'>How To Append Multiple Rectangles in D3?</a>by 'i alarmed alien' on Stack Overflow
+      was used to construct the stacked rectangles on the barchart.</li>
+      <li><a href='http://bl.ocks.org/mstanaland/6100713'>Stacked Bar Chart with Tooltips</a> by Michael Stanaland
+      was used to generate the legend for the stacked barchart.</li>
+      <li><a href = "https://bl.ocks.org/melt6457/712da3556e18fa517e2cd9d432933bce">A5 - Heatmap in D3</a> by Kory Melton
+      was used to create the details-on-demand heatmap visualization.</li>
+      <li><a href = "https://d3-legend.susielu.com">d3 SVG Legend</a> by Susie Lu
+      was used to build the vertical legend for the heatmap.</li>
+      <li><a href = "https://bl.ocks.org/d3noob/180287b6623496dbb5ac4b048813af52">Simple Tooltips in V6</a> by d3noob on bl.ocks.org
+      was used to implement the tooltip feature on the barchart and heatmap.</li>
     </ul>
   </div>
 
