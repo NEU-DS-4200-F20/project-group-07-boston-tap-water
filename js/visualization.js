@@ -1,6 +1,6 @@
 // Immediately Invoked Function Expression to limit access to our
 // variables and prevent
-((()  => {
+((() => {
 
    // Load the data from a csv file
   d3.csv('data/project.csv').then(data => {
@@ -25,7 +25,6 @@
    let overallTable = table()
    .selectionDispatcher(d3.dispatch(dispatchString))
    ('#table', data);
-
 
 
 barchart.selectionDispatcher().on(dispatchString + '.bc-to-tb', (overallTable.updateSelection));

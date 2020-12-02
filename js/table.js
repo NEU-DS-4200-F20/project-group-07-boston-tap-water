@@ -30,12 +30,12 @@ t.on('end', function(){ // for end of click/drag, indicates end of selection(s)
   clear_heatmap()
   groups = d3.select('table').selectAll('.selected').data()
   let set = []
-  for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
-      set.push(groups[i].Date)
+  for(i=0; i < groups.length; i++){ //makes subset of data with corresponding date
+    set.push(groups[i].Date)
   }
   console.log(set)
 
-  if(set.length !== 0) {
+  if(set.length !== 0){
     clear_heatmap()
     heatmap(set)
   }

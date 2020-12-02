@@ -50,18 +50,16 @@ d3.csv("data/heatmap_data.csv").then(function(data){
 
     // Build X scales and axis:
   let x = d3.scaleBand()
-    .range([ 0, width ])
-    .domain(myGroups)
-    .padding(0.01);
+    .range([0, width])
+    .domain(myGroups);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
 
   // Build Y scales and axis:
   let y = d3.scaleBand()
-    .range([ height, 0 ])
-    .domain(myVars.reverse())
-    .padding(0.01);
+    .range([height, 0])
+    .domain(myVars.reverse());
   svg.append("g")
     .call(d3.axisLeft(y));
 

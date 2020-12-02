@@ -138,8 +138,8 @@ function barChart(){
       }
     });
 
-
     svg2.call(brush);
+
   //Draw bars
   let rects = svg2.selectAll(".rect")
     .data(data)
@@ -202,9 +202,6 @@ function barChart(){
     .on("mouseover", mouseoverTop)
     .on("mouseout", mouseoutTop);
 
-
-
-
     // append bottom bar (darker purple)
     rects.append("rect")
     .attr('id', function(d){
@@ -255,10 +252,6 @@ function barChart(){
     .on("mouseout", mouseoutBottom);
 
 
-
-
-
-
     // Highlight points when brushed
     function brush(g) {
       const brush = d3.brush()
@@ -283,7 +276,6 @@ function barChart(){
           [x0],
           [x1]
         ] = event.selection;
-        //console.log(x0, x1)
 
         rects.classed('selected', d =>
           x0 <= X(d) && X(d) <= x1
