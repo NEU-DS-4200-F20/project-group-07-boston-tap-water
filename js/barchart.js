@@ -149,6 +149,9 @@ function barChart(){
 
   selectableElements = rects;
 
+
+  heatmap(['3/1/19', '3/15/19', '4/2/19', '5/7/19', '5/24/19', '6/11/19', '6/28/19', '7/16/19', '8/2/19', '8/20/19', '9/6/19']) 
+
   // append top bar (light purple)
 
   let clicked = false;
@@ -313,7 +316,12 @@ function barChart(){
         }
         console.log(set)
         clear_heatmap()
-        heatmap(set)
+        if (set.length == 0) { 
+          heatmap(['3/1/19', '3/15/19', '4/2/19', '5/7/19', '5/24/19', '6/11/19', '6/28/19', '7/16/19', '8/2/19', '8/20/19', '9/6/19']) 
+        } 
+        else { 
+          heatmap(set)
+        }
 
         if(event.sourceEvent !== undefined && event.sourceEvent.type!='end'){
           d3.select(this).call(brush.move, null);
@@ -330,7 +338,8 @@ function barChart(){
       .style("left", (event.pageX) + "px")
       .style("top", (event.pageY - 28) + "px")
       .style("width", "100px")
-      .style("height", "50px");
+      .style("height", "50px")
+      .style("font-size", "16px");
     }
     function mouseoutTop(d) {
       div.transition()
@@ -346,7 +355,8 @@ function barChart(){
       .style("left", (event.pageX) + "px")
       .style("top", (event.pageY - 28) + "px")
       .style("width", "100px")
-      .style("height", "35px");
+      .style("height", "35px")
+      .style("font-size", "16px");
     }
     function mouseoutBottom(d) {
       div.transition()
