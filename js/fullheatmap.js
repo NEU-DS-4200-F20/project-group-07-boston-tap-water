@@ -1,15 +1,12 @@
 
-function fullheatmap(){
+function fullheatmap() {
 
 let margin = {top: 30, right: 200, bottom: 30, left: 100},
     width = 900 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 
-function chart(selector, data){
-
-
-
+function chart(selector, data) {
 
 // append the svg object to the body of the page
 let svg = d3.select("#heatmap")
@@ -22,21 +19,12 @@ let svg = d3.select("#heatmap")
 .attr("transform",
       "translate(" + (margin.left + 100) + "," + margin.top + ")");
 
-/*d3.select('#heatmapid')
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)*/
-
-
-
-  
-
 d3.select('#heatmap')
   .attr("height", height + margin.top + margin.bottom)
   .attr("width", d.length * 95 + margin.left + margin.right + 60)
   .append("g")
   .attr("transform",
         "translate(" + (margin.left + 100) + "," + margin.top + ")");
-
 
 let title = svg
     .append('g')
@@ -47,9 +35,6 @@ let title = svg
     .style("font", "30px")
     .style("font-weight", "bold")
     .text('Bacterial Phyla Percentages');
-
-// Labels of row and columns
-
 
   //let myGroups = []
   //let myVars = []
@@ -87,13 +72,9 @@ let title = svg
   svg.append("g")
     .call(d3.axisLeft(y));
 
-
   let myColor = d3.scaleSequential()
       .interpolator(d3.interpolateGreens)
       .domain([.1, 6])
-
-
-
 
 svg.selectAll()
 .data(subset, function(d) {
@@ -128,8 +109,6 @@ texts
       d3.select(this).attr('fill-opacity', 1)})
     .on("mouseout", function(d){
       d3.select(this).transition().delay(500).attr('fill-opacity', 0)})
-
-
 
   let min = 0;
   let max = 6;
@@ -170,11 +149,8 @@ texts
 
   return chart;
 };
-    return chart;
+  return chart;
 }
-
-
-
 
 /*
 // Function for the actions that occur during a mouseover event

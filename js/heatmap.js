@@ -1,8 +1,10 @@
-
-
 let margin = {top: 30, right: 200, bottom: 30, left: 100},
 width = 800 - margin.left - margin.right,
 height = 400 - margin.top - margin.bottom;
+
+let div = d3.select("body").append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
 
 // append the svg object to the body of the page
 let svg = d3.select("#heatmap")
@@ -15,13 +17,7 @@ let svg = d3.select("#heatmap")
 .attr("transform",
       "translate(" + (margin.left + 100) + "," + margin.top + ")");
 
-/*d3.select('#heatmapid')
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)*/
-
 function heatmap(d){
-
-  
 
 d3.select('#heatmap')
   .attr("height", height + margin.top + margin.bottom)
@@ -30,36 +26,20 @@ d3.select('#heatmap')
   .attr("transform",
         "translate(" + (margin.left + 100) + "," + margin.top + ")");
 
-
 let title = svg
     .append('g')
     .append('text')
-    .attr('x', -80) //gives x coordinate of label to left margin
+    .attr('x', width/4) //gives x coordinate of label to left margin
     .attr('y', -17)// gives y coordinate of lable
     .style('fill', 'black') //styles the text to black
     .style("font", "30px")
     .style("font-weight", "bold")
     .text('Bacterial Phyla Percentages');
 
-// Labels of row and columns
-
-
-
-
-
 d3.csv("data/heatmap_data.csv").then(function(data){
 
   let myGroups = d
-  //let myVars = []
-
   let myVars = ["Betaproteobacteria", "Nitrospira", "Gammaproteobacteria", "Actinobacteria", "Oligoflexia", "Gemmatimonadetes", "Planctomycetia", "Flavobacteriia", "Deltaproteobacteria", "Chlamydiia"]
-
-  /*for(i=0; i < 120; i++) { //makes an array with the bacteria phyla names
-    if (myGroups.includes(data[i].Date)){
-    myVars.push(data[i].Type)
-    }
-  }*/
-
   let subset = [];
 
   for(i=0; i < 120; i++) { //makes subset of data with corresponding date
@@ -85,13 +65,9 @@ d3.csv("data/heatmap_data.csv").then(function(data){
   svg.append("g")
     .call(d3.axisLeft(y));
 
-
   let myColor = d3.scaleSequential()
       .interpolator(d3.interpolateGreens)
       .domain([.1, 6])
-
-
-
 
 svg.selectAll()
 .data(subset, function(d) {
@@ -106,16 +82,44 @@ svg.selectAll()
 	  .style("fill", function(d) {  //fills color based on proportion values
 	    //console.log(d.Proportion)
       return myColor(+d.Proportion)} )
-    
+    .on("mouseover", function(event,d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0.7);
+      div.html(d.Proportion + "%")
+      .style("left", (event.pageX) + "px")
+      .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", function(d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0);
+    });
   /*
-  .on("mouseover", onMouseOver) // calls and executes actions written in onMouseOver function
-  .on("mouseout", onMouseOut) // calls and executes actions written in onMouseOut function
-  */
-  let texts = svg.selectAll(".text")
+  .on("mouseover", (event, f) =>  {
+    d3.select(this) // identifies which rect is being hovered over
+    svg.append('text')
+    .attr('class', 'details')
+    .attr('x', this.width)// x position of text
+    .attr('y', this.height)// y position of text
+    .attr('font-size', '17') // font size of text
+    .attr("stroke", "black")
+    .attr("stroke-width", "1px")
+    .text(function() { // defines content of the textbox
+      return [f.Proportion + "%"];
+    })
+  })
+  .on("mouseout", function() {
+    d3.selectAll('.details') // removes textbox with details from chart
+    .remove()
+  })*/
+
+  /*let texts = svg.selectAll(".text")
     .data(subset, function(d) { return d.Date + ':' + d.Type})
     .enter()
-    .append("text");
+    .append("text");*/
 
+/*
 texts
     .attr("x", function(d) { return x.bandwidth()/2})
     .attr("y", function(d) {return y(d.Type) + 24 })
@@ -127,8 +131,7 @@ texts
       d3.select(this).attr('fill-opacity', 1)})
     .on("mouseout", function(d){
       d3.select(this).transition().delay(500).attr('fill-opacity', 0)})
-
-
+*/
 
   let min = 0;
   let max = 6;
@@ -168,33 +171,8 @@ texts
   .attr("height", 200)
 
 });
-
 }
 
-function clear_heatmap(){
-
+function clear_heatmap() {
   d3.selectAll('#heatmapid > *').selectAll('g').remove()
-
 }
-
-/*
-// Function for the actions that occur during a mouseover event
-function onMouseOver(event, f) {
-  d3.select(this) // identifies which rect is being hovered over
-  svg.append('text')
-  .attr('class', 'details')
-  .attr('x', 98) // x position of text
-  .attr('y', 330) // y position of text
-  .attr('font-size', '17') // font size of text
-  .attr("stroke", "black")
-  .attr("stroke-width", "1px")
-  .text(function() { // defines content of the textbox
-    return [f.Proportion + "%"];
-  });
-}
-
-// Function for the actions that occur during a mouseout event
-function onMouseOut(event, f) {
-  d3.selectAll('.details') // removes textbox with details from chart
-  .remove()
-}*/

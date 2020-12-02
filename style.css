@@ -23,17 +23,13 @@ h1, h2, h3 {
 	margin: auto;
 }
 
-
-
 /* But your visualization should be full-width and full-height */
 .vis-holder {
   width: 90%;
   height: 90%;
   margin-left: auto;
-  margin-right: auto ;
+  margin-right: auto;
   display: flex;
-
-
 }
 
 #heatmapid a{
@@ -121,6 +117,19 @@ tr.selected:hover {
 /* The scatterplot will take the right half of the screen */
 .heatmap-holder {
   flex: 0 1 50%;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 75px;
+  height: 20px;
+  padding: 5px;
+  font: 16px sans-serif;
+  background: lightgrey;
+  border: 1px;
+  border-radius: 8px;
+  pointer-events: none;
 }
 
 
