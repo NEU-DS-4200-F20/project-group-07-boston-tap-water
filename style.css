@@ -119,7 +119,7 @@ tr.selected:hover {
   flex: 0 1 50%;
 }
 
-div.tooltip {
+div.tooltip { /* default tooltip style */
   position: absolute;
   text-align: center;
   width: 75px;
@@ -127,8 +127,8 @@ div.tooltip {
   padding: 5px;
   font: 16px sans-serif;
   background: lightgrey;
-  border: 1px;
-  border-radius: 8px;
+  border: 2px solid;
+  border-radius: 5px;
   pointer-events: none;
 }
 

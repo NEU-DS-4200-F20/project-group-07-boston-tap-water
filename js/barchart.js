@@ -45,7 +45,6 @@ function barChart(){
     .attr('height', height + margin.top + margin.bottom)
     .style('background-color', '#fff') // change the background color to white
     .attr('viewBox', [0, 0, width + margin.left + margin.right , height + margin.top + margin.bottom].join(' '))
-  
 
     //Define scales
     yScale
@@ -156,7 +155,7 @@ function barChart(){
 
   //rects = g.enter()
     rects.append("rect")
-    .attr('id', function(d){  
+    .attr('id', function(d){
       str = "rect1" + xValue(d)
       return str.replace(new RegExp('/', 'g'), "_")
     })
@@ -173,23 +172,23 @@ function barChart(){
       return height - margin.bottom - Y1(d); //makes the height of the bar match its humidity
     })
     .on('click', function(event, d) {
-      
+
       //d3.select('#' + r).node().parentNode.classed('selected', true)
       d3.select(this.parentNode).classed('selected', true)
       //d3.select('#' + r).attr("class", 'selected')
       let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
-      
+
       dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
 
       groups = svg2.selectAll('.selected').data()
         let set = []
         for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
-          set.push(groups[i].Date)  
+          set.push(groups[i].Date)
         }
         console.log(set)
         clear_heatmap()
         heatmap(set)
-      //rects.classed('selected', d=> X(d)) 
+      //rects.classed('selected', d=> X(d))
       //highlight()
      /* if (clicked == true) {
         clear_heatmap()
@@ -200,13 +199,15 @@ function barChart(){
       clicked = true
 */
     })
- 
-    
-    
+    .on("mouseover", mouseoverTop)
+    .on("mouseout", mouseoutTop);
+
+
+
 
     // append bottom bar (darker purple)
     rects.append("rect")
-    .attr('id', function(d){  
+    .attr('id', function(d){
       str = "rect2" + xValue(d)
       return str.replace(new RegExp('/', 'g'), "_")
     })
@@ -226,13 +227,13 @@ function barChart(){
       d3.select(this.parentNode).classed('selected', true)
       //d3.select('#' + r).attr("class", 'selected')
       let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
-      
+
       dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
 
       groups = svg2.selectAll('.selected').data()
         let set = []
         for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
-          set.push(groups[i].Date)  
+          set.push(groups[i].Date)
         }
         console.log(set)
         clear_heatmap()
@@ -250,11 +251,13 @@ function barChart(){
       clicked = true
 */
     })
-   
-    
+    .on("mouseover", mouseoverBottom)
+    .on("mouseout", mouseoutBottom);
 
 
-    
+
+
+
 
     // Highlight points when brushed
     function brush(g) {
@@ -273,7 +276,7 @@ function barChart(){
 
       // Highlight the selected circles.
       function highlight(event, d) {
-        
+
         if (event.selection === null) return ;
         //if(event.selection === )
         const [
@@ -283,13 +286,13 @@ function barChart(){
         //console.log(x0, x1)
 
         rects.classed('selected', d =>
-          x0 <= X(d) && X(d) <= x1 
+          x0 <= X(d) && X(d) <= x1
           //&& x0 >= X(d) && X(d) >= x1
           //&& y0 <= Y2(d) && Y2(d) <= y1
         );
 
         //console.log(d3.select(".rect").classed('selected', true))
-      
+
         // Get the name of our dispatcher's event
         let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 
@@ -299,12 +302,12 @@ function barChart(){
         /*groups = svg2.selectAll('.selected').data()
         let set = []
         for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
-          set.push(groups[i].Date)  
+          set.push(groups[i].Date)
         }
         console.log(set)
         clear_heatmap()
         heatmap(set)*/
-        
+
         dispatcher.call(dispatchString, this, svg2.selectAll('.selected').data());
 
       }
@@ -314,7 +317,7 @@ function barChart(){
         groups = svg2.selectAll('.selected').data()
         let set = []
         for(i=0; i < groups.length; i++) { //makes subset of data with corresponding date
-          set.push(groups[i].Date)  
+          set.push(groups[i].Date)
         }
         console.log(set)
         clear_heatmap()
@@ -325,6 +328,39 @@ function barChart(){
         }
       }
     }
+
+
+    function mouseoverTop(event,d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0.9);
+      div.html("Non-Intact Cell Count: " + y1Value(d))
+      .style("left", (event.pageX) + "px")
+      .style("top", (event.pageY - 28) + "px")
+      .style("width", "100px")
+      .style("height", "50px");
+    }
+    function mouseoutTop(d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0);
+    };
+
+    function mouseoverBottom(event,d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0.9);
+      div.html("Intact Cell Count: " + y2Value(d))
+      .style("left", (event.pageX) + "px")
+      .style("top", (event.pageY - 28) + "px")
+      .style("width", "100px")
+      .style("height", "35px");
+    }
+    function mouseoutBottom(d) {
+      div.transition()
+      .duration(0)
+      .style("opacity", 0);
+    };
 
     return chart;
 }

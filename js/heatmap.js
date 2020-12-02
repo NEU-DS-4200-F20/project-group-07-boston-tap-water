@@ -88,7 +88,9 @@ svg.selectAll()
       .style("opacity", 0.7);
       div.html(d.Proportion + "%")
       .style("left", (event.pageX) + "px")
-      .style("top", (event.pageY - 28) + "px");
+      .style("top", (event.pageY - 28) + "px")
+      .style("width", "75px")
+      .style("height", "20px");
     })
     .on("mouseout", function(d) {
       div.transition()
