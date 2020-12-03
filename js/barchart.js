@@ -71,11 +71,11 @@ function barChart(){
     //Add label
     .append('text')
     .attr('y', -35) // gives y coordinate of label
-    .attr('x', -145) //gives x coordinate of label
+    .attr('x', -135) //gives x coordinate of label
     .style('fill', 'black') //styles the text to black
     .attr('font-size', 15)
     .attr("transform", "rotate(270)")
-    .text('Cell Count (cells/mL)') //adds cell count as axis label
+    .text('Cell Count (cells/microliter)') //adds cell count as axis label
 
 
   let xAxis = svg2
@@ -334,7 +334,7 @@ function barChart(){
       div.transition()
       .duration(0)
       .style("opacity", 0.9);
-      div.html("Non-Intact Cell Count: " + y1Value(d))
+      div.html("Non-Intact Cell Count: " + (y1Value(d) - y2Value(d)))
       .style("left", (event.pageX) + "px")
       .style("top", (event.pageY - 28) + "px")
       .style("width", "100px")

@@ -29,12 +29,12 @@ d3.select('#heatmap')
 let title = svg
     .append('g')
     .append('text')
-    .attr('x', width/4) //gives x coordinate of label to left margin
+    .attr('x', 90) //gives x coordinate of label to left margin
     .attr('y', -17)// gives y coordinate of lable
     .style('fill', 'black') //styles the text to black
     .style("font", "30px")
     .style("font-weight", "bold")
-    .text('Bacterial Phyla Percentages');
+    .text('Bacterial Phyla Relative Abundance (%)');
 
 d3.csv("data/heatmap_data.csv").then(function(data){
 
